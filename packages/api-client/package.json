@@ -1,0 +1,21 @@
+{
+  "name": "@saas/api-client",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@saas/domain": "workspace:*",
+    "axios": "^1.20.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@saas/config": "workspace:*",
+    "typescript": "~6.0.3"
+  }
+}
