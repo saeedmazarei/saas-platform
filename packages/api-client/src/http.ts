@@ -49,21 +49,21 @@ function getErrorMessage(error: unknown) {
   return 'Request failed';
 }
 
+type Method = 'GET' | 'POST' | 'PATCH' | 'DELETE';
+
 type RequestOptions<T> = {
-  method?: 'GET' | 'POST' | 'PATCH' | 'DELETE';
-  body?: unknown;
   params?: Record<string, string | number | boolean | undefined>;
   schema?: z.ZodType<T>;
   signal?: AbortSignal;
   skipAuthRedirect?: boolean;
 };
 
-export async function request<T = void>(path: string, options: RequestOptions<T> = {}): Promise<T> {
-  const { method = 'GET', body, params, schema, signal, skipAuthRedirect } = options;
+async function send<T>(method: Method, url: string, body: unknown, options: RequestOptions<T> = {}): Promise<T> {
+  const { params, schema, signal, skipAuthRedirect } = options;
 
   let data: unknown;
   try {
-    const response = await http.request({ url: path, method, data: body, params, signal });
+    const response = await http.request({ url, method, data: body, params, signal });
     data = response.data;
   } catch (error) {
     if (axios.isCancel(error)) throw error;
@@ -80,3 +80,10 @@ export async function request<T = void>(path: string, options: RequestOptions<T>
   }
   return result.data;
 }
+
+export const request = {
+  get: <T = void>(url: string, options?: RequestOptions<T>) => send('GET', url, undefined, options),
+  post: <T = void>(url: string, body?: unknown, options?: RequestOptions<T>) => send('POST', url, body, options),
+  patch: <T = void>(url: string, body?: unknown, options?: RequestOptions<T>) => send('PATCH', url, body, options),
+  delete: <T = void>(url: string, options?: RequestOptions<T>) => send('DELETE', url, undefined, options),
+};
