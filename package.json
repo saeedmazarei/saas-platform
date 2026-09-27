@@ -11,6 +11,6 @@
     "devDependencies": {
         "@saas/config": "workspace:*",
         "turbo": "^2.11.4",
-        "typescript": "~6.0.3"
+        "typescript": "catalog:"
     }
 }

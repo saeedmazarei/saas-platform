@@ -13,10 +13,10 @@
   },
   "dependencies": {
     "@saas/domain": "workspace:*",
-    "msw": "^2.15.0"
+    "msw": "catalog:"
   },
   "devDependencies": {
     "@saas/config": "workspace:*",
-    "typescript": "~6.0.3"
+    "typescript": "catalog:"
   }
 }
