@@ -1,0 +1,22 @@
+{
+  "name": "@saas/mocks",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./browser": "./src/browser.ts",
+    "./node": "./src/node.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@saas/domain": "workspace:*",
+    "msw": "^2.15.0"
+  },
+  "devDependencies": {
+    "@saas/config": "workspace:*",
+    "typescript": "~6.0.3"
+  }
+}

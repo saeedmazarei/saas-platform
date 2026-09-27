@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const paginatedSchema = <T extends z.ZodType>(item: T) =>
   z.object({
@@ -8,9 +8,16 @@ export const paginatedSchema = <T extends z.ZodType>(item: T) =>
     pageSize: z.number().int().positive(),
   });
 
+export type Paginated<T> = {
+  items: T[];
+  total: number;
+  page: number;
+  pageSize: number;
+};
+
 export type ListUsersParams = {
   page: number;
   pageSize: number;
   search?: string;
-  role?: 'admin' | 'user';
+  role?: "admin" | "user";
 };
