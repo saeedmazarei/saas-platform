@@ -20,6 +20,19 @@ importers:
 
   packages/config: {}
 
+  packages/domain:
+    dependencies:
+      zod:
+        specifier: ^4.6.5
+        version: 4.6.5
+    devDependencies:
+      '@saas/config':
+        specifier: workspace:*
+        version: link:../config
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
+
 packages:
 
   '@turbo/darwin-64@2.11.4':
@@ -61,6 +74,9 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  zod@4.6.5:
+    resolution: {integrity: sha512-v5l/aFXZQeai4awLbOpSoHecE9UiMrnfx75tEXLjNonXVARxQ5mOeipTjROUchszUNCqnE+hqAMujRsRHsut2Q==}
+
 snapshots:
 
   '@turbo/darwin-64@2.11.4':
@@ -91,3 +107,5 @@ snapshots:
       '@turbo/windows-arm64': 2.11.4
 
   typescript@6.0.3: {}
+
+  zod@4.6.5: {}
