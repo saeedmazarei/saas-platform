@@ -8,6 +8,11 @@ const packageEncapsulation = {
   message: 'Import workspace packages through their public entry point (e.g. "@saas/ui").',
 };
 
+const featureEncapsulation = {
+  group: ['@/features/*/*'],
+  message: 'Import a feature through its public index (e.g. "@/features/users"), not its internals.',
+};
+
 export default [
   { ignores: ['**/dist/**', '**/node_modules/**', '**/.turbo/**', '**/public/mockServiceWorker.js'] },
   js.configs.recommended,
@@ -21,7 +26,25 @@ export default [
       'react-hooks/exhaustive-deps': 'warn',
       '@typescript-eslint/consistent-type-imports': 'error',
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-      'no-restricted-imports': ['error', { patterns: [packageEncapsulation] }],
+      'no-restricted-imports': ['error', { patterns: [packageEncapsulation, featureEncapsulation] }],
+    },
+  },
+  {
+    files: ['apps/*/src/features/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            packageEncapsulation,
+            {
+              group: ['@/features/*', '@/router/*', '@/layouts/*', '@/App', '../../*'],
+              message:
+                'A feature must not import other features or the app wiring. Use @/components, @/hooks, @/utils or a @saas/* package.',
+            },
+          ],
+        },
+      ],
     },
   },
   {
