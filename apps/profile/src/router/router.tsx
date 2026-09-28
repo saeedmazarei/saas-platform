@@ -2,8 +2,8 @@ import { NotFoundPage, RouteErrorBoundary } from '@saas/app-core';
 import { GuestOnly, LoginPage, RequireAuth } from '@saas/auth';
 import { DemoCredentials } from '@saas/ui';
 import { createBrowserRouter, Navigate } from 'react-router';
-import { AdminLayout } from '@/layouts/AdminLayout';
 import { env } from '@/config/env';
+import { ProfileLayout } from '@/layouts/ProfileLayout';
 import { features } from './features';
 
 export const router = createBrowserRouter([
@@ -12,23 +12,24 @@ export const router = createBrowserRouter([
     element: (
       <GuestOnly>
         <LoginPage
-          productName="Admin Console"
-          footer={env.VITE_ENABLE_MOCKS && <DemoCredentials email="admin@example.com" password="password123" />}
+          productName="My Account"
+          footer={env.VITE_ENABLE_MOCKS && <DemoCredentials email="user@example.com" password="password123" />}
         />
       </GuestOnly>
     ),
   },
   {
+    // Any signed-in user may use this app, so no role is required.
     element: (
-      <RequireAuth roles={['admin']}>
-        <AdminLayout />
+      <RequireAuth>
+        <ProfileLayout />
       </RequireAuth>
     ),
     children: [
       {
         errorElement: <RouteErrorBoundary />,
         children: [
-          { index: true, element: <Navigate to="/users" replace /> },
+          { index: true, element: <Navigate to="/profile" replace /> },
           ...features.flatMap((feature) => feature.routes),
           { path: '*', element: <NotFoundPage /> },
         ],

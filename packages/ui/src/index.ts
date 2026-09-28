@@ -1,5 +1,6 @@
 export { AppShell } from './components/AppShell';
 export type { NavItem } from './components/AppShell';
+export { DemoCredentials } from './components/DemoCredentials';
 export { ErrorState } from './components/ErrorState';
 export { NameAvatar } from './components/NameAvatar';
 export { PageHeader } from './components/PageHeader';
