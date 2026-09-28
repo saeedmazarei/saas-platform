@@ -17,8 +17,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const session = useSyncExternalStore(sessionStore.subscribe, sessionStore.getSession);
   const queryClient = useQueryClient();
 
-  // On startup, check that the saved session is still valid (the token may have expired).
-  // If the server answers 401, the axios setup clears the session.
   useEffect(() => {
     if (!sessionStore.getAccessToken()) return;
     getMe()
@@ -26,8 +24,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .catch(() => {});
   }, []);
 
-  // When the session ends, remove all cached server data,
-  // so the next user never sees the previous user's data.
   useEffect(
     () =>
       sessionStore.subscribe(() => {
@@ -45,7 +41,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         sessionStore.set(next);
       },
       logout: async () => {
-        // Log out locally even if the server call fails.
         await logoutRequest().catch(() => {});
         sessionStore.clear();
       },
