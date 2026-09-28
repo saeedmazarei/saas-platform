@@ -1,16 +1,25 @@
 {
-    "name": "farabi-saas-frontend",
-    "private": true,
-    "type": "module",
-    "packageManager": "pnpm@10.23.0",
-    "scripts": {
-        "dev": "turbo run dev",
-        "build": "turbo run build",
-        "test": "turbo run test"
-    },
-    "devDependencies": {
-        "@saas/config": "workspace:*",
-        "turbo": "^2.11.4",
-        "typescript": "catalog:"
-    }
+  "name": "farabi-saas-frontend",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.23.0",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "lint": "eslint .",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@saas/config": "workspace:*",
+    "eslint": "catalog:",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
+    "turbo": "^2.11.4",
+    "typescript": "catalog:"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint --max-warnings=0"
+  }
 }
