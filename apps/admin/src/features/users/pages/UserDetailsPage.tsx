@@ -1,16 +1,17 @@
+import EditIcon from '@mui/icons-material/EditOutlined';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { NameAvatar, PageHeader, PageLoader } from '@saas/ui';
-import { useQuery } from '@tanstack/react-query';
 import type { ReactNode } from 'react';
-import { useParams } from 'react-router';
-import { usersQueries } from '../api/queries';
+import { Link, useParams } from 'react-router';
 import { BackLink } from '../components/BackLink';
 import { RoleChip, StatusChip } from '../components/UserChips';
 import { UserQueryError } from '../components/UserQueryError';
+import { useUser } from '../hooks/api/useUser';
 
 const dateFormat = new Intl.DateTimeFormat(undefined, { dateStyle: 'long' });
 
@@ -27,7 +28,7 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
 
 export function UserDetailsPage() {
   const { userId = '' } = useParams();
-  const { data: user, isPending, isError, error, refetch } = useQuery(usersQueries.detail(userId));
+  const { data: user, isPending, isError, error, refetch } = useUser(userId);
 
   if (isPending) return <PageLoader />;
   if (isError) return <UserQueryError error={error} onRetry={() => void refetch()} />;
@@ -38,6 +39,11 @@ export function UserDetailsPage() {
         eyebrow={<BackLink to="/users" label="All users" />}
         title={user.name}
         subtitle={user.jobTitle || undefined}
+        actions={
+          <Button component={Link} to="edit" variant="contained" startIcon={<EditIcon />}>
+            Edit
+          </Button>
+        }
       />
       <Paper sx={{ p: 3 }}>
         <Stack direction="row" spacing={2} sx={{ alignItems: 'center', mb: 3 }}>

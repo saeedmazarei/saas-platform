@@ -11,7 +11,7 @@ import type { User } from '@saas/domain';
 import { NameAvatar } from '@saas/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link as RouterLink, useNavigate } from 'react-router';
-import { usersQueries } from '../api/queries';
+import { usersQueries } from '../hooks/api/queries';
 import { PAGE_SIZE_OPTIONS } from '../hooks/useUsersListParams';
 import { RoleChip, StatusChip } from './UserChips';
 

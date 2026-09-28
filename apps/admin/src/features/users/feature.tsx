@@ -15,6 +15,10 @@ export const usersFeature: FeatureModule = {
           path: ':userId',
           lazy: () => import('./pages/UserDetailsPage').then((m) => ({ Component: m.UserDetailsPage })),
         },
+        {
+          path: ':userId/edit',
+          lazy: () => import('./pages/UserEditPage').then((m) => ({ Component: m.UserEditPage })),
+        },
       ],
     },
   ],

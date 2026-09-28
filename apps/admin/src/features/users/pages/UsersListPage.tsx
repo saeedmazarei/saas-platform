@@ -2,15 +2,14 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { ErrorState, PageHeader, PageLoader } from '@saas/ui';
-import { useQuery } from '@tanstack/react-query';
-import { usersQueries } from '../api/queries';
 import { UsersTable } from '../components/UsersTable';
 import { UsersToolbar } from '../components/UsersToolbar';
+import { useUsersList } from '../hooks/api/useUsersList';
 import { useUsersListParams } from '../hooks/useUsersListParams';
 
 export function UsersListPage() {
   const [params, updateParams] = useUsersListParams();
-  const { data, isPending, isError, error, refetch, isPlaceholderData } = useQuery(usersQueries.list(params));
+  const { data, isPending, isError, error, refetch, isPlaceholderData } = useUsersList(params);
 
   return (
     <>
