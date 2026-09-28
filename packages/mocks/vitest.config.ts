@@ -3,10 +3,6 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   plugins: [react()],
-  resolve: {
-    alias: { '@': '/src' },
-  },
-  server: { port: 5174, strictPort: true },
   test: {
     environment: 'jsdom',
     setupFiles: ['@saas/config/vitest-setup'],

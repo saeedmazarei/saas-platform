@@ -1,4 +1,11 @@
 {
   "extends": "@saas/config/tsconfig/base.json",
-  "include": ["src"]
+  "include": [
+    "src"
+  ],
+  "compilerOptions": {
+    "types": [
+      "@saas/config/vitest-env"
+    ]
+  }
 }

@@ -5,18 +5,26 @@
   "type": "module",
   "exports": {
     "./tsconfig/*.json": "./tsconfig/*.json",
-    "./eslint": "./eslint/index.js"
+    "./eslint": "./eslint/index.js",
+    "./vitest-setup": "./vitest/setup.js",
+    "./vitest-env": {
+      "types": "./vitest/env.d.ts"
+    }
   },
   "dependencies": {
     "@eslint/js": "^10.0.1",
+    "@testing-library/jest-dom": "catalog:",
+    "@testing-library/react": "catalog:",
     "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.12.0",
     "typescript-eslint": "^8.70.1"
   },
   "peerDependencies": {
-    "eslint": "catalog:"
+    "eslint": "catalog:",
+    "vitest": "catalog:"
   },
   "devDependencies": {
-    "eslint": "catalog:"
+    "eslint": "catalog:",
+    "vitest": "catalog:"
   }
 }
