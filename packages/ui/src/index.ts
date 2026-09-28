@@ -1,12 +1,12 @@
+export { AppShell } from './components/AppShell';
+export type { NavItem } from './components/AppShell';
 export { ErrorState } from './components/ErrorState';
 export { NameAvatar } from './components/NameAvatar';
 export { PageHeader } from './components/PageHeader';
 export { PageLoader } from './components/PageLoader';
-export { createAppTheme } from './theme';
-export type { AppThemeOptions } from './theme';
-export { UiProvider } from './UiProvider';
-export { AppShell } from './components/AppShell';
-export type { NavItem } from './components/AppShell';
 export { UserMenu } from './components/UserMenu';
 export type { UserMenuLink } from './components/UserMenu';
 export { FormTextField } from './form/FormTextField';
+export { createAppTheme } from './theme/theme';
+export type { AppThemeOptions } from './theme/theme';
+export { UiProvider } from './theme/UiProvider';
