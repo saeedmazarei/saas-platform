@@ -211,8 +211,9 @@ Rules that aren't checked get broken as the team grows. Here, tools check them:
 | React and MUI exist only once                             | Packages list them as `peerDependencies`                       |
 | One version of each shared library in the whole repo      | pnpm `catalog:` in `pnpm-workspace.yaml`                       |
 | No lint or type errors are committed                      | Pre-commit hook (husky + lint-staged + typecheck)              |
+| Everything passes before it reaches `main`                | CI: GitHub Actions runs lint, typecheck, test and build        |
 
-The pre-commit hook can be skipped (`--no-verify`), so a CI pipeline running `lint`, `typecheck`, `test` and `build` should be the final gate (see §5).
+The pre-commit hook gives fast feedback on the developer's machine, but it can be skipped (`--no-verify`). **CI is the real gate:** `.github/workflows/ci.yml` runs `lint`, `typecheck`, `test` and `build` on every push to `main` and on every pull request, with a frozen lockfile.
 
 ---
 
@@ -258,6 +259,5 @@ Only if these become real problems: **many teams that need independent release s
 - **Real backend:** set `VITE_ENABLE_MOCKS=false` and `VITE_API_URL`. Generate the domain types from the backend's OpenAPI spec; the zod checks stay as a runtime safety net.
 - **Session:** httpOnly cookie, short-lived tokens with refresh.
 - **One domain for all products** (`/admin`, `/profile`) behind a reverse proxy, so they share one login.
-- **CI pipeline** (e.g. GitHub Actions) running `lint`, `typecheck`, `test` and `build` on every pull request.
 - **Internationalization (i18n):** `react-i18next`, where **each package and feature owns its own texts** (for example `packages/ui/src/locales/en.json`, `features/users/locales/en.json`) and the app loads them at startup. A feature's texts move with its folder, which fits the feature-based structure. Right-to-left (RTL) support for Persian is added in the theme.
 - **More quality tools:** end-to-end tests (Playwright) for the main flows, Storybook for `@saas/ui`, error monitoring (e.g. Sentry) in `startApp`, and a shared Prettier config.
