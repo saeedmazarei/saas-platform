@@ -1,1 +1,2 @@
-pnpm test
+pnpm exec lint-staged
+pnpm turbo run typecheck --output-logs=errors-only
