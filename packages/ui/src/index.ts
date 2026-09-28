@@ -9,3 +9,4 @@ export { AppShell } from './components/AppShell';
 export type { NavItem } from './components/AppShell';
 export { UserMenu } from './components/UserMenu';
 export type { UserMenuLink } from './components/UserMenu';
+export { FormTextField } from './form/FormTextField';
