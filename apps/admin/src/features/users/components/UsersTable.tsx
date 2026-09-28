@@ -9,7 +9,9 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import type { User } from '@saas/domain';
 import { NameAvatar } from '@saas/ui';
+import { useQueryClient } from '@tanstack/react-query';
 import { Link as RouterLink, useNavigate } from 'react-router';
+import { usersQueries } from '../api/queries';
 import { PAGE_SIZE_OPTIONS } from '../hooks/useUsersListParams';
 import { RoleChip, StatusChip } from './UserChips';
 
@@ -26,6 +28,9 @@ const dateFormat = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' });
 
 export function UsersTable({ users, total, page, pageSize, onPageChange, onPageSizeChange }: UsersTableProps) {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const prefetch = (id: string) => void queryClient.prefetchQuery(usersQueries.detail(id));
 
   return (
     <>
@@ -42,7 +47,13 @@ export function UsersTable({ users, total, page, pageSize, onPageChange, onPageS
           </TableHead>
           <TableBody>
             {users.map((user) => (
-              <TableRow key={user.id} hover sx={{ cursor: 'pointer' }} onClick={() => navigate(user.id)}>
+              <TableRow
+                key={user.id}
+                hover
+                sx={{ cursor: 'pointer' }}
+                onClick={() => navigate(user.id)}
+                onMouseEnter={() => prefetch(user.id)}
+              >
                 <TableCell>
                   <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
                     <NameAvatar name={user.name} size={32} />

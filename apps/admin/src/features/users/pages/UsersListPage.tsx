@@ -5,6 +5,7 @@ import { ErrorState, PageHeader, PageLoader } from '@saas/ui';
 import { useQuery } from '@tanstack/react-query';
 import { usersQueries } from '../api/queries';
 import { UsersTable } from '../components/UsersTable';
+import { UsersToolbar } from '../components/UsersToolbar';
 import { useUsersListParams } from '../hooks/useUsersListParams';
 
 export function UsersListPage() {
@@ -15,6 +16,12 @@ export function UsersListPage() {
     <>
       <PageHeader title="Users" subtitle="All user accounts on the platform." />
       <Paper sx={{ overflow: 'hidden' }}>
+        <UsersToolbar
+          search={params.search ?? ''}
+          role={params.role}
+          onSearchChange={(search) => updateParams({ search })}
+          onRoleChange={(role) => updateParams({ role })}
+        />
         <LinearProgress sx={{ visibility: isPlaceholderData ? 'visible' : 'hidden' }} />
         {isPending ? (
           <PageLoader />
