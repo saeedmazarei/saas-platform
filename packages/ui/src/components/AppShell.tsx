@@ -10,12 +10,14 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from '@saas/i18n';
 import { useState, type ReactNode } from 'react';
 import { NavLink } from 'react-router';
 
 const DRAWER_WIDTH = 240;
 
 export type NavItem = {
+  /** A translation key with its namespace, e.g. 'users:menuLabel'. */
   label: string;
   to: string;
   icon?: ReactNode;
@@ -29,10 +31,11 @@ type AppShellProps = {
 };
 
 export function AppShell({ productName, navItems, headerActions, children }: AppShellProps) {
+  const { t } = useTranslation('ui');
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navigation = (
-    <Box component="nav" aria-label="Main navigation">
+    <Box component="nav" aria-label={t('mainNavigation')}>
       <Toolbar>
         <Typography variant="h6" noWrap>
           {productName}
@@ -49,7 +52,7 @@ export function AppShell({ productName, navItems, headerActions, children }: App
             sx={{ mx: 1, borderRadius: 1, '&.active': { bgcolor: 'action.selected' } }}
           >
             {item.icon && <ListItemIcon>{item.icon}</ListItemIcon>}
-            <ListItemText primary={item.label} />
+            <ListItemText primary={t(item.label)} />
           </ListItemButton>
         ))}
       </List>
@@ -72,7 +75,7 @@ export function AppShell({ productName, navItems, headerActions, children }: App
         <Toolbar>
           <IconButton
             edge="start"
-            aria-label="Open navigation"
+            aria-label={t('openNavigation')}
             onClick={() => setMobileOpen(true)}
             sx={{ mr: 1, display: { md: 'none' } }}
           >

@@ -8,12 +8,15 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import type { User } from '@saas/domain';
+import { useTranslation } from '@saas/i18n';
 import { NameAvatar } from '@saas/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link as RouterLink, useNavigate } from 'react-router';
 import { usersQueries } from '../hooks/api/queries';
 import { PAGE_SIZE_OPTIONS } from '../hooks/useUsersListParams';
 import { RoleChip, StatusChip } from './UserChips';
+
+const dateFormat = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' });
 
 type UsersTableProps = {
   users: User[];
@@ -24,9 +27,8 @@ type UsersTableProps = {
   onPageSizeChange: (pageSize: number) => void;
 };
 
-const dateFormat = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' });
-
 export function UsersTable({ users, total, page, pageSize, onPageChange, onPageSizeChange }: UsersTableProps) {
+  const { t } = useTranslation('users');
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -35,14 +37,14 @@ export function UsersTable({ users, total, page, pageSize, onPageChange, onPageS
   return (
     <>
       <TableContainer>
-        <Table aria-label="Users">
+        <Table aria-label={t('tableLabel')}>
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>Email</TableCell>
-              <TableCell>Role</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell sx={{ display: { xs: 'none', lg: 'table-cell' } }}>Joined</TableCell>
+              <TableCell>{t('name')}</TableCell>
+              <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>{t('email')}</TableCell>
+              <TableCell>{t('role')}</TableCell>
+              <TableCell>{t('status')}</TableCell>
+              <TableCell sx={{ display: { xs: 'none', lg: 'table-cell' } }}>{t('joined')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

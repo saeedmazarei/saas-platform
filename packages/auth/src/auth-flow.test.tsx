@@ -1,7 +1,9 @@
 import { configureHttpClient } from '@saas/api-client';
 import { createSeedUsers } from '@saas/mocks';
 import { createMockServer } from '@saas/mocks/node';
-import { createAppTheme, UiProvider } from '@saas/ui';
+import { validationTranslations } from '@saas/domain';
+import { createI18n, I18nProvider } from '@saas/i18n';
+import { createAppTheme, uiTranslations, UiProvider } from '@saas/ui';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -11,6 +13,7 @@ import { AuthProvider } from './AuthProvider';
 import { GuestOnly, RequireAuth } from './guards';
 import { LoginPage } from './LoginPage';
 import { sessionStore } from './session-store';
+import { authTranslations } from './translations';
 
 const { server } = createMockServer();
 const [admin, member] = createSeedUsers();
@@ -44,14 +47,17 @@ function renderApp(initialPath: string, roles?: ('admin' | 'user')[]) {
     ],
     { initialEntries: [initialPath] },
   );
+  const i18n = createI18n({ ...validationTranslations, ...uiTranslations, ...authTranslations });
   render(
-    <QueryClientProvider client={new QueryClient()}>
-      <UiProvider theme={createAppTheme()}>
-        <AuthProvider>
-          <RouterProvider router={router} />
-        </AuthProvider>
-      </UiProvider>
-    </QueryClientProvider>,
+    <I18nProvider i18n={i18n}>
+      <QueryClientProvider client={new QueryClient()}>
+        <UiProvider theme={createAppTheme()}>
+          <AuthProvider>
+            <RouterProvider router={router} />
+          </AuthProvider>
+        </UiProvider>
+      </QueryClientProvider>
+    </I18nProvider>,
   );
 }
 

@@ -5,6 +5,7 @@ import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from '@saas/i18n';
 import { NameAvatar, PageHeader, PageLoader } from '@saas/ui';
 import type { ReactNode } from 'react';
 import { Link, useParams } from 'react-router';
@@ -27,6 +28,7 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
 }
 
 export function UserDetailsPage() {
+  const { t } = useTranslation('users');
   const { userId = '' } = useParams();
   const { data: user, isPending, isError, error, refetch } = useUser(userId);
 
@@ -36,12 +38,12 @@ export function UserDetailsPage() {
   return (
     <>
       <PageHeader
-        eyebrow={<BackLink to="/users" label="All users" />}
+        eyebrow={<BackLink to="/users" label={t('allUsers')} />}
         title={user.name}
         subtitle={user.jobTitle || undefined}
         actions={
           <Button component={Link} to="edit" variant="contained" startIcon={<EditIcon />}>
-            Edit
+            {t('edit')}
           </Button>
         }
       />
@@ -55,12 +57,12 @@ export function UserDetailsPage() {
         </Stack>
         <Divider sx={{ mb: 3 }} />
         <Box sx={{ display: 'grid', gap: 3, gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' } }}>
-          <Field label="Email">{user.email}</Field>
-          <Field label="Job title">{user.jobTitle || '—'}</Field>
-          <Field label="Member since">{dateFormat.format(new Date(user.createdAt))}</Field>
-          <Field label="User ID">{user.id}</Field>
+          <Field label={t('email')}>{user.email}</Field>
+          <Field label={t('jobTitle')}>{user.jobTitle || '—'}</Field>
+          <Field label={t('memberSince')}>{dateFormat.format(new Date(user.createdAt))}</Field>
+          <Field label={t('userId')}>{user.id}</Field>
           <Box sx={{ gridColumn: '1 / -1' }}>
-            <Field label="Bio">{user.bio || '—'}</Field>
+            <Field label={t('bio')}>{user.bio || '—'}</Field>
           </Box>
         </Box>
       </Paper>

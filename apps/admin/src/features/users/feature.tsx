@@ -1,8 +1,10 @@
 import PeopleIcon from '@mui/icons-material/PeopleOutlined';
 import type { FeatureModule } from '@saas/app-core';
+import users from './locales/en.json';
 
 export const usersFeature: FeatureModule = {
-  navItems: [{ label: 'Users', to: '/users', icon: <PeopleIcon /> }],
+  navItems: [{ label: 'users:menuLabel', to: '/users', icon: <PeopleIcon /> }],
+  translations: { users },
   routes: [
     {
       path: 'users',

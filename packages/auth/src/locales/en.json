@@ -1,0 +1,10 @@
+{
+  "signIn": "Sign in",
+  "continueTo": "to continue to {{product}}",
+  "email": "Email",
+  "password": "Password",
+  "couldNotSignIn": "Could not sign in. Please try again.",
+  "accessDenied": "Access denied",
+  "accessDeniedMessage": "You are signed in as {{email}}, which does not have access to this application.",
+  "signInWithAnotherAccount": "Sign in with another account"
+}

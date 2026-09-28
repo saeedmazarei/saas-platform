@@ -53,6 +53,7 @@ packages/
   domain/         Data models and validation (zod): the single source of truth
   api-client/     HTTP client (axios) with response validation
   mocks/          Mock API (MSW + in-memory database), for development and tests only
+  i18n/           Texts setup (react-i18next): every text lives in locale files
   ui/             Design system: MUI theme, app frame, page states, form fields
   auth/           Session, AuthProvider, route guards, login page
   app-core/       Startup code and providers shared by every app
@@ -107,16 +108,17 @@ features/users/
   components/       UI used only by this feature
   hooks/            Feature state (e.g. list filters stored in the URL)
   hooks/api/        One hook per API call + the TanStack Query keys
+  locales/en.json   All texts of the feature
 ```
 
-**Every feature exports a `FeatureModule`** (`{ routes, navItems }`), and **an app is just a list of features**:
+**Every feature exports a `FeatureModule`** (`{ routes, navItems, translations }`), and **an app is just a list of features**:
 
 ```ts
 // apps/admin/src/router/features.ts
 export const features: FeatureModule[] = [usersFeature];
 ```
 
-The router and the side menu are built from this list. **Adding a feature means creating one folder and adding one line.**
+The router, the side menu and the texts are built from this list. **Adding a feature means creating one folder and adding one line.**
 
 ---
 
@@ -186,6 +188,14 @@ Packages expose their TypeScript source directly (`"exports": { ".": "./src/inde
 - **The same `queryOptions` are reused for prefetching:** hovering over a row preloads that user's details.
 - **App-wide query settings** (in `app-core`): data is fresh for 30 seconds, and 4xx errors are not retried (retrying a 404 or 403 doesn't help).
 
+### Texts (i18n)
+
+- **No text is written inside components.** Every text lives in a `locales/en.json` file, and components use `t('key')` (react-i18next behind `@saas/i18n`).
+- **Each package and each feature owns its texts** as one namespace: `validation` (domain), `ui`, `auth`, `core` (app-core), `app` (each app), and `users` / `profile` (the features). A feature brings its texts through its `FeatureModule`, just like its routes, so **deleting a feature deletes its texts**.
+- **The app collects them at startup** (`createAppI18n` in `app-core`): the shared packages' texts + the app's own + every feature's.
+- **Validation messages are keys** (for example `'nameTooShort'`) in the zod schemas, and the shared form field translates them. The schemas stay free of UI code.
+- **The app is English only for now.** Another language means adding a second locale file next to each `en.json`. For a right-to-left language like Persian, the theme's direction and an RTL style plugin are added in `UiProvider`.
+
 ### User experience details that come from the architecture
 
 - List state (page, page size, search, role) is in the URL.
@@ -221,11 +231,11 @@ The pre-commit hook gives fast feedback on the developer's machine, but it can b
 
 ### Adding a feature (e.g. "Audit log" in Admin)
 
-1. Create `apps/admin/src/features/audit-log/` with `feature.tsx` (routes + menu item) and `index.ts`.
+1. Create `apps/admin/src/features/audit-log/` with `feature.tsx` (routes, menu item, texts), `locales/en.json` and `index.ts`.
 2. Add its API functions to `@saas/api-client` and its schemas to `@saas/domain`.
 3. Add one line to `apps/admin/src/router/features.ts`.
 
-The router, the menu and the lazy loading follow automatically, and no other feature changes.
+The router, the menu, the texts and the lazy loading follow automatically, and no other feature changes.
 
 ### Adding a product (e.g. "Billing")
 
@@ -259,5 +269,5 @@ Only if these become real problems: **many teams that need independent release s
 - **Real backend:** set `VITE_ENABLE_MOCKS=false` and `VITE_API_URL`. Generate the domain types from the backend's OpenAPI spec; the zod checks stay as a runtime safety net.
 - **Session:** httpOnly cookie, short-lived tokens with refresh.
 - **One domain for all products** (`/admin`, `/profile`) behind a reverse proxy, so they share one login.
-- **Internationalization (i18n):** `react-i18next`, where **each package and feature owns its own texts** (for example `packages/ui/src/locales/en.json`, `features/users/locales/en.json`) and the app loads them at startup. A feature's texts move with its folder, which fits the feature-based structure. Right-to-left (RTL) support for Persian is added in the theme.
+- **A second language** (e.g. Persian): add `locales/fa.json` files next to the English ones, a language switch, and right-to-left support in `UiProvider`.
 - **More quality tools:** end-to-end tests (Playwright) for the main flows, Storybook for `@saas/ui`, error monitoring (e.g. Sentry) in `startApp`, and a shared Prettier config.

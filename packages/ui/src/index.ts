@@ -8,6 +8,7 @@ export { PageLoader } from './components/PageLoader';
 export { UserMenu } from './components/UserMenu';
 export type { UserMenuLink } from './components/UserMenu';
 export { FormTextField } from './form/FormTextField';
+export { uiTranslations } from './i18n/translations';
 export { createAppTheme } from './theme/theme';
 export type { AppThemeOptions } from './theme/theme';
 export { UiProvider } from './theme/UiProvider';

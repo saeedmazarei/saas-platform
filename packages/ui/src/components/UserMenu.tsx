@@ -4,6 +4,7 @@ import Divider from '@mui/material/Divider';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from '@saas/i18n';
 import { useState } from 'react';
 import { NameAvatar } from './NameAvatar';
 
@@ -17,6 +18,7 @@ type UserMenuProps = {
 };
 
 export function UserMenu({ name, email, links = [], onLogout }: UserMenuProps) {
+  const { t } = useTranslation('ui');
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
   const close = () => setAnchor(null);
 
@@ -27,7 +29,7 @@ export function UserMenu({ name, email, links = [], onLogout }: UserMenuProps) {
         onClick={(event) => setAnchor(event.currentTarget)}
         startIcon={<NameAvatar name={name} size={28} />}
         aria-haspopup="menu"
-        aria-label="Account menu"
+        aria-label={t('accountMenu')}
       >
         <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
           {name}
@@ -52,7 +54,7 @@ export function UserMenu({ name, email, links = [], onLogout }: UserMenuProps) {
             onLogout();
           }}
         >
-          Sign out
+          {t('signOut')}
         </MenuItem>
       </Menu>
     </>

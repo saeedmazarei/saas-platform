@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { isApiError } from '@saas/api-client';
 import { updateProfileSchema, type UpdateProfileInput, type User } from '@saas/domain';
+import { useTranslation } from '@saas/i18n';
 import { FormTextField } from '@saas/ui';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -20,6 +21,7 @@ const toFormValues = (user: User): UpdateProfileInput => ({
 });
 
 export function ProfileForm({ user, onSubmit }: ProfileFormProps) {
+  const { t } = useTranslation('profile');
   const [saved, setSaved] = useState(false);
   const {
     control,
@@ -40,7 +42,7 @@ export function ProfileForm({ user, onSubmit }: ProfileFormProps) {
       reset(toFormValues(updated));
       setSaved(true);
     } catch (error) {
-      setError('root', { message: isApiError(error) ? error.message : 'Could not save your profile.' });
+      setError('root', { message: isApiError(error) ? error.message : t('couldNotSave') });
     }
   });
 
@@ -49,25 +51,25 @@ export function ProfileForm({ user, onSubmit }: ProfileFormProps) {
       {errors.root && <Alert severity="error">{errors.root.message}</Alert>}
       {saved && !isDirty && (
         <Alert severity="success" onClose={() => setSaved(false)}>
-          Your profile has been updated.
+          {t('updated')}
         </Alert>
       )}
-      <FormTextField control={control} name="name" label="Full name" />
-      <FormTextField control={control} name="jobTitle" label="Job title" />
+      <FormTextField control={control} name="name" label={t('fullName')} />
+      <FormTextField control={control} name="jobTitle" label={t('jobTitle')} />
       <FormTextField
         control={control}
         name="bio"
-        label="Bio"
+        label={t('bio')}
         multiline
         minRows={3}
-        helperText="A few words about yourself (max 500 characters)."
+        helperText={t('bioHelp')}
       />
       <Stack direction="row" spacing={1} sx={{ justifyContent: 'flex-end' }}>
         <Button onClick={() => reset()} disabled={!isDirty || isSubmitting}>
-          Discard
+          {t('discard')}
         </Button>
         <Button type="submit" variant="contained" loading={isSubmitting} disabled={!isDirty}>
-          Save
+          {t('save')}
         </Button>
       </Stack>
     </Stack>

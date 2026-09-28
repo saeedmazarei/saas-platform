@@ -1,0 +1,18 @@
+{
+  "menuLabel": "Profile",
+  "title": "Profile",
+  "subtitle": "How other people see you on the platform.",
+  "personalDetails": "Personal details",
+  "managedByAdmin": "Your email and role are managed by an administrator.",
+  "noJobTitle": "No job title",
+  "memberSince": "Member since {{date}}",
+  "roles": { "admin": "Administrator", "user": "Member" },
+  "fullName": "Full name",
+  "jobTitle": "Job title",
+  "bio": "Bio",
+  "bioHelp": "A few words about yourself (max 500 characters).",
+  "discard": "Discard",
+  "save": "Save",
+  "updated": "Your profile has been updated.",
+  "couldNotSave": "Could not save your profile."
+}

@@ -1,0 +1,7 @@
+{
+  "unexpectedError": "An unexpected error occurred. Reloading the page usually fixes it.",
+  "reloadPage": "Reload page",
+  "pageNotFound": "Page not found",
+  "pageNotFoundMessage": "The page you are looking for does not exist.",
+  "goHome": "Go home"
+}

@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import type { User, UserRole } from '@saas/domain';
+import { useTranslation } from '@saas/i18n';
 import { ErrorState } from '@saas/ui';
 import type { ReactNode } from 'react';
 import { Navigate, Outlet, useLocation, type Location } from 'react-router';
@@ -16,6 +17,7 @@ type RequireAuthProps = {
 };
 
 export function RequireAuth({ roles, loginPath = '/login', children }: RequireAuthProps) {
+  const { t } = useTranslation('auth');
   const { user, logout } = useAuth();
   const location = useLocation();
 
@@ -25,11 +27,11 @@ export function RequireAuth({ roles, loginPath = '/login', children }: RequireAu
     return (
       <Box sx={{ maxWidth: 480, mx: 'auto', mt: 12, px: 2 }}>
         <ErrorState
-          title="Access denied"
-          message={`You are signed in as ${user.email}, which does not have access to this application.`}
+          title={t('accessDenied')}
+          message={t('accessDeniedMessage', { email: user.email })}
           action={
             <Button variant="contained" onClick={() => void logout()}>
-              Sign in with another account
+              {t('signInWithAnotherAccount')}
             </Button>
           }
         />

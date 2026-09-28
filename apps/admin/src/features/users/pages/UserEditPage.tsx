@@ -1,5 +1,6 @@
 import Paper from '@mui/material/Paper';
 import { useAuth } from '@saas/auth';
+import { useTranslation } from '@saas/i18n';
 import { PageHeader, PageLoader } from '@saas/ui';
 import { useNavigate, useParams } from 'react-router';
 import { BackLink } from '../components/BackLink';
@@ -9,6 +10,7 @@ import { useUpdateUser } from '../hooks/api/useUpdateUser';
 import { useUser } from '../hooks/api/useUser';
 
 export function UserEditPage() {
+  const { t } = useTranslation('users');
   const { userId = '' } = useParams();
   const navigate = useNavigate();
   const { user: currentUser } = useAuth();
@@ -22,7 +24,7 @@ export function UserEditPage() {
 
   return (
     <>
-      <PageHeader eyebrow={<BackLink to={detailsPath} label={user.name} />} title="Edit user" />
+      <PageHeader eyebrow={<BackLink to={detailsPath} label={user.name} />} title={t('editUser')} />
       <Paper sx={{ p: 3, maxWidth: 720 }}>
         <UserEditForm
           user={user}

@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import { isApiError } from '@saas/api-client';
 import { updateUserSchema, type UpdateUserInput, type User } from '@saas/domain';
+import { useTranslation } from '@saas/i18n';
 import { FormTextField } from '@saas/ui';
 import { useForm } from 'react-hook-form';
 
@@ -16,6 +17,7 @@ type UserEditFormProps = {
 };
 
 export function UserEditForm({ user, isSelf, onSubmit, onCancel }: UserEditFormProps) {
+  const { t } = useTranslation('users');
   const {
     control,
     handleSubmit,
@@ -39,7 +41,7 @@ export function UserEditForm({ user, isSelf, onSubmit, onCancel }: UserEditFormP
       if (isApiError(error) && error.status === 409) {
         setError('email', { message: error.message });
       } else {
-        setError('root', { message: isApiError(error) ? error.message : 'Could not save changes.' });
+        setError('root', { message: isApiError(error) ? error.message : t('couldNotSave') });
       }
     }
   });
@@ -47,39 +49,39 @@ export function UserEditForm({ user, isSelf, onSubmit, onCancel }: UserEditFormP
   return (
     <Stack component="form" spacing={2.5} onSubmit={submit} noValidate>
       {errors.root && <Alert severity="error">{errors.root.message}</Alert>}
-      <FormTextField control={control} name="name" label="Full name" />
-      <FormTextField control={control} name="email" label="Email" type="email" />
-      <FormTextField control={control} name="jobTitle" label="Job title" />
+      <FormTextField control={control} name="name" label={t('fullName')} />
+      <FormTextField control={control} name="email" label={t('email')} type="email" />
+      <FormTextField control={control} name="jobTitle" label={t('jobTitle')} />
       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
         <FormTextField
           control={control}
           name="role"
-          label="Role"
+          label={t('role')}
           select
           disabled={isSelf}
-          helperText={isSelf ? 'You cannot change your own role' : undefined}
+          helperText={isSelf ? t('cannotChangeOwnRole') : undefined}
         >
-          <MenuItem value="user">User</MenuItem>
-          <MenuItem value="admin">Admin</MenuItem>
+          <MenuItem value="user">{t('roles.user')}</MenuItem>
+          <MenuItem value="admin">{t('roles.admin')}</MenuItem>
         </FormTextField>
         <FormTextField
           control={control}
           name="status"
-          label="Status"
+          label={t('status')}
           select
           disabled={isSelf}
-          helperText={isSelf ? 'You cannot suspend yourself' : undefined}
+          helperText={isSelf ? t('cannotSuspendSelf') : undefined}
         >
-          <MenuItem value="active">Active</MenuItem>
-          <MenuItem value="suspended">Suspended</MenuItem>
+          <MenuItem value="active">{t('statuses.active')}</MenuItem>
+          <MenuItem value="suspended">{t('statuses.suspended')}</MenuItem>
         </FormTextField>
       </Stack>
       <Stack direction="row" spacing={1} sx={{ justifyContent: 'flex-end' }}>
         <Button onClick={onCancel} disabled={isSubmitting}>
-          Cancel
+          {t('cancel')}
         </Button>
         <Button type="submit" variant="contained" loading={isSubmitting} disabled={!isDirty}>
-          Save changes
+          {t('saveChanges')}
         </Button>
       </Stack>
     </Stack>

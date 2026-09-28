@@ -1,0 +1,11 @@
+{
+  "mainNavigation": "Main navigation",
+  "openNavigation": "Open navigation",
+  "loading": "Loading",
+  "errorTitle": "Something went wrong",
+  "errorMessage": "Please try again.",
+  "tryAgain": "Try again",
+  "accountMenu": "Account menu",
+  "signOut": "Sign out",
+  "demoAccount": "Demo account:"
+}

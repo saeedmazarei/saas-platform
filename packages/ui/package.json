@@ -9,6 +9,9 @@
   "scripts": {
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "@saas/i18n": "workspace:*"
+  },
   "peerDependencies": {
     "@emotion/react": "catalog:",
     "@emotion/styled": "catalog:",

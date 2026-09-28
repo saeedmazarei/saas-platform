@@ -5,6 +5,7 @@ import type { User } from '@saas/domain';
 import { createAppTheme } from '@saas/ui';
 import { render } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
+import { createProfileI18n } from '@/i18n';
 import { features } from '@/router/features';
 
 /**
@@ -25,7 +26,7 @@ export function renderWithApp(path: string, { user }: { user: User }) {
   );
 
   render(
-    <AppProviders theme={createAppTheme()} queryClient={createQueryClient()}>
+    <AppProviders theme={createAppTheme()} queryClient={createQueryClient()} i18n={createProfileI18n()}>
       <RouterProvider router={router} />
     </AppProviders>,
   );

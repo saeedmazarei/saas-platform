@@ -19,12 +19,12 @@ export const userSchema = z.object({
 
 export type User = z.infer<typeof userSchema>;
 
-const nameField = z.string().trim().min(2, 'Name must be at least 2 characters').max(80);
-const jobTitleField = z.string().trim().max(80, 'Job title is too long');
+const nameField = z.string().trim().min(2, 'nameTooShort').max(80, 'nameTooLong');
+const jobTitleField = z.string().trim().max(80, 'jobTitleTooLong');
 
 export const updateUserSchema = z.object({
   name: nameField,
-  email: z.email('Enter a valid email address'),
+  email: z.email('emailInvalid'),
   role: userRoleSchema,
   status: userStatusSchema,
   jobTitle: jobTitleField,
@@ -34,7 +34,7 @@ export type UpdateUserInput = z.infer<typeof updateUserSchema>;
 export const updateProfileSchema = z.object({
   name: nameField,
   jobTitle: jobTitleField,
-  bio: z.string().trim().max(500, 'Bio must be at most 500 characters'),
+  bio: z.string().trim().max(500, 'bioTooLong'),
 });
 
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;

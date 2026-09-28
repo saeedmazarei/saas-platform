@@ -12,6 +12,8 @@
   "dependencies": {
     "@saas/api-client": "workspace:*",
     "@saas/auth": "workspace:*",
+    "@saas/domain": "workspace:*",
+    "@saas/i18n": "workspace:*",
     "@saas/ui": "workspace:*"
   },
   "peerDependencies": {

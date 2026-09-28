@@ -1,0 +1,8 @@
+{
+  "nameTooShort": "Name must be at least 2 characters",
+  "nameTooLong": "Name must be at most 80 characters",
+  "jobTitleTooLong": "Job title is too long",
+  "emailInvalid": "Enter a valid email address",
+  "bioTooLong": "Bio must be at most 500 characters",
+  "passwordRequired": "Password is required"
+}

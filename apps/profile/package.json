@@ -20,6 +20,7 @@
     "@saas/app-core": "workspace:*",
     "@saas/auth": "workspace:*",
     "@saas/domain": "workspace:*",
+    "@saas/i18n": "workspace:*",
     "@saas/mocks": "workspace:*",
     "@saas/ui": "workspace:*",
     "@tanstack/react-query": "catalog:",

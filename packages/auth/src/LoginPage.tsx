@@ -7,6 +7,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { isApiError } from '@saas/api-client';
 import { loginSchema, type LoginInput } from '@saas/domain';
+import { useTranslation } from '@saas/i18n';
 import { FormTextField } from '@saas/ui';
 import type { ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
@@ -18,6 +19,7 @@ type LoginPageProps = {
 };
 
 export function LoginPage({ productName, footer }: LoginPageProps) {
+  const { t } = useTranslation('auth');
   const { login } = useAuth();
   const {
     control,
@@ -34,7 +36,7 @@ export function LoginPage({ productName, footer }: LoginPageProps) {
       await login(values);
     } catch (error) {
       setError('root', {
-        message: isApiError(error) ? error.message : 'Could not sign in. Please try again.',
+        message: isApiError(error) ? error.message : t('couldNotSignIn'),
       });
     }
   });
@@ -45,15 +47,15 @@ export function LoginPage({ productName, footer }: LoginPageProps) {
         <Stack component="form" spacing={2.5} onSubmit={onSubmit} noValidate>
           <div>
             <Typography variant="h5" component="h1">
-              Sign in
+              {t('signIn')}
             </Typography>
-            <Typography color="text.secondary">to continue to {productName}</Typography>
+            <Typography color="text.secondary">{t('continueTo', { product: productName })}</Typography>
           </div>
           {errors.root && <Alert severity="error">{errors.root.message}</Alert>}
           <FormTextField
             control={control}
             name="email"
-            label="Email"
+            label={t('email')}
             type="email"
             autoComplete="email"
             autoFocus
@@ -61,12 +63,12 @@ export function LoginPage({ productName, footer }: LoginPageProps) {
           <FormTextField
             control={control}
             name="password"
-            label="Password"
+            label={t('password')}
             type="password"
             autoComplete="current-password"
           />
           <Button type="submit" variant="contained" size="large" loading={isSubmitting}>
-            Sign in
+            {t('signIn')}
           </Button>
           {footer}
         </Stack>
